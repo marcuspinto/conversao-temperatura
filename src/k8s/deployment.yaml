@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contemp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contemp
+  template:
+    metadata:
+      labels:
+        app: contemp
+    spec:
+      containers:
+      - name: contemp
+        image: marcuspinto/conversao-temperatura:v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contemp
+spec:
+  selector:
+    app: contemp
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort
